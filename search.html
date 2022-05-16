@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <a href="./index.html">Home</a>
+        <a href="./search.html">Search</a>
+    </div>
+    <br>
+    <div>
+        <input type="text" placeholder="name" id="inp">
+       <button id="search">Search</button>
+    </div>
+    <div id="container">
+    <table>
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    brewery_type
+                </th>
+                <th>
+                    city
+                </th>
+                <th>
+                    state
+                </th>
+                <th>
+                    MORE DETAILS
+                </th>
+            </tr>
+        </thead>
+    <tbody id="tablebody">
+
+
+    </tbody>
+    </table>
+   </div>
+</body>
+<script>
+ 
+ async function abc(){
+ var name=document.getElementById('inp').value;
+ let uri=`https://api.openbrewerydb.org/breweries?by_name=${name}&per_page=3`;
+ var res=await fetch(uri).then((response)=>{
+     return response.json();
+ }).then((data)=>{
+    // console.log(data);
+    document.querySelector('tbody').innerHTML='';
+    data.forEach(ele=>{
+    var row=document.createElement('tr');
+
+           var td1=document.createElement('td');
+           td1.innerText=ele.name;
+
+           var td2=document.createElement('td');
+           td2.innerText=ele.brewery_type;
+
+           var td3=document.createElement('td');
+           td3.innerText=ele.city;
+           var td4=document.createElement('td');
+           td4.innerText=ele.state;
+
+           row.append(td1,td2,td3,td4);
+           document.querySelector('#tablebody').append(row);
+    })
+ })
+ }
+ let bn=document.getElementById('search');
+ bn.addEventListener('click',myfun);
+ function myfun(){
+    abc()
+ }
+</script>
+</html>
