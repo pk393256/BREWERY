@@ -15,8 +15,8 @@
     </div>
     <br>
     <div>
-        <input type="text" placeholder="name" id="inp">
-       <button id="search">Search</button>
+        <input type="text" placeholder="name" id="inp" onkeyup="my()">
+       <!-- <button id="search">Search</button> -->
     </div>
     <div id="container">
     <table>
@@ -37,6 +37,7 @@
                 <th>
                     MORE DETAILS
                 </th>
+               
             </tr>
         </thead>
     <tbody id="tablebody">
@@ -47,7 +48,10 @@
    </div>
 </body>
 <script>
- 
+//     const myFunction=()=>{
+//      abc();
+//  }
+ var favList=JSON.parse(localStorage.getItem('favList')) || [];
  async function abc(){
  var name=document.getElementById('inp').value;
  let uri=`https://api.openbrewerydb.org/breweries?by_name=${name}&per_page=3`;
@@ -69,16 +73,28 @@
            td3.innerText=ele.city;
            var td4=document.createElement('td');
            td4.innerText=ele.state;
+           var td5=document.createElement('td');
+           td5.innerText='click';
+
 
            row.append(td1,td2,td3,td4);
            document.querySelector('#tablebody').append(row);
     })
  })
  }
- let bn=document.getElementById('search');
- bn.addEventListener('click',myfun);
- function myfun(){
-    abc()
+ function debounce(fn,d){
+     let timer;
+     return function(){
+         let context=this,
+         args=arguments;
+         clearTimeout(timer)
+    timer= setTimeout(()=>{
+        abc.apply(context,arguments);
+     },d)
+    }
  }
+
+ const my=debounce(abc,1000);
+ 
 </script>
 </html>
