@@ -13,6 +13,19 @@
         <a href="./index.html">Home</a>
         <a href="./search.html">Search</a>
     </div>
+    <br>
+    <select id="select">
+        <option value="micro">micro</option>
+        <option value="nano">nano</option>
+        <option value="regional">regional</option>
+        <option value="brewpub">brewpub</option>
+        <option value="large">large</option>
+        <option value="planning">planning</option>
+        <option value="bar">bar</option>
+        <option value="contract">contract</option>
+        <option value="proprietor">proprietor</option>
+        <option value="closed">closed</option>
+    </select>
     <div id="container">
         <table>
             <thead>
@@ -32,6 +45,9 @@
                     <th>
                         MORE DETAILS
                     </th>
+                    <th>
+                        page
+                    </th>
                 </tr>
             </thead>
         <tbody id="tablebody">
@@ -43,6 +59,7 @@
 
 </body>
 <script>
+    var cartz=JSON.parse(localStorage.getItem('id_name')) || [];
     async function abc(){
  
  let uri=`https://api.openbrewerydb.org/breweries`;
@@ -64,9 +81,25 @@
            td3.innerText=ele.city;
            var td4=document.createElement('td');
            td4.innerText=ele.state;
-           
+           var td5=document.createElement('td');
+           var a=document.createElement('button');
 
-           row.append(td1,td2,td3,td4);
+           a.innerText='more';
+           a.style.color='blue';
+           td5.append(a);
+           var td6=document.createElement('td');
+           var b=document.createElement('button');
+           b.innerText='page';
+           b.style.color='blue';
+           td6.append(b);
+           a.addEventListener('click',function(){
+   
+   cartz.push(ele.id);
+   localStorage.setItem('id_name',JSON.stringify(cartz));
+   alert('added successfully')
+});
+
+           row.append(td1,td2,td3,td4,td5,td6);
            document.querySelector('#tablebody').append(row);
     })
  })
